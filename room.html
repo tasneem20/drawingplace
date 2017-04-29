@@ -1,0 +1,204 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<link type="text/css" href="index.css" rel="stylesheet"/>
+<link rel="shortcut icon" href="img/images.jpg">
+<title>
+DrwaingPlace
+</title>
+</head>
+<script src="js/jscolor.js"></script>
+
+<script src="js/draw.js"></script>
+
+	 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+ <script type="text/javascript" src="js/paper.js"></script>
+    <script type="text/paperscript" src="js/draw.js" canvas="myCanvas"></script>
+
+
+
+<body>
+<div id="container">
+ 
+			 <img  id="logo1"src="img/i1.png" title="DrawingPlace" width="300px" height="200px">
+			 <center>
+				<img  id="logo2"src="img/logoo.png" title="DrawingPlace" height="260px">
+			</center>
+		
+
+<p id="user"></p>
+<div id="countcontainer">
+<p id="count">users count:  
+<span id="usercount"></span></p>
+</div>
+<section id="drawroom">
+<canvas id="myCanvas" width="1000" height="400" resize="true" style="border:1px solid #004a80;">
+<!-- Load the Paper.js library -->
+
+</canvas>
+</section>
+
+<section id="drawtool">
+<div class="tools">
+<div class="tab">
+	
+<div class="choosedots">
+<img id="dots" src="img/dot1.png" title="dots" width="50px" height="50px">
+
+	<div class="dots">
+		
+		<form name="dotsSize">
+		<label>
+		<input type="radio" name="color2" value="verySmall">
+			<img src="img/dot.png" title="very small" width="50px" height="50px" id="red1">
+		</label>
+		<label>
+		<input type="radio" name="color2" value="small">
+			<img src="img/dot0.png" title="small" width="50px" height="50px" id="red1">
+		</label>
+		<label>
+		<input type="radio" name="color2" value="medium">
+			<img src="img/dot3.png" title="medium" width="50px" height="50px" id="red1">
+		</label>
+		<label>
+		<input type="radio" name="color2" value="big">
+			<img src="img/dot2.png" title="big" width="50px" height="50px" id="red1">
+		</label>
+			</form>			
+	</div>
+	</div>
+	
+<form name="action">
+		<label>
+		<input type="radio" name="color1" value="pen">
+<img id="pen" src="img/penn.png" title="pen" width="50px" height="50px">
+</label>
+<label>
+<input type="radio" name="color1" value="rubber">
+<img id="rubber" src="img/rubber.png" title="rubber" width="50px" height="50px">
+</label>
+ 
+	
+<button class="jscolor
+    {valueElement:'colorpicker', styleElement:'styleInput'}" id="white" >
+	choose color
+	</button>
+	 
+<input  type="hidden" id="colorpicker" value="000000">
+
+
+
+</form>
+</div>
+</div>
+
+<center>
+<fieldset class="type1">
+<center>
+<button id="myBtn1" class="myBtn">
+<p> <em>Start New Session</em> </p></center>
+</button>
+</fieldset>
+</center>
+
+<center>
+<fieldset class="type1">
+<center>
+<button id="myBtn2"  class="myBtn">
+<p> <em>Join existing room  </em></p></center>
+</button>
+</fieldset>
+</center>
+
+<center>
+<fieldset class="type1">
+<center>
+<button id="myBtn3"  class="myBtn">
+<p> <em>Share Room Name</em> </p></center>
+</button>
+</fieldset>
+</center>
+
+<center>
+<fieldset class="type1">
+<center>
+<button id="myBtn4"  class="myBtn">
+<p> <em>Save snapshot </em></p></center>
+</button>
+</fieldset>
+</center>
+
+<div id="chat">
+<fieldset class="chat">
+<center>
+<p>Chat</p>
+</center>
+</fieldset>
+</div>
+<form id="send-message" class="writemessage">
+            <input type="text" size="29" id="message" >
+            <input type="submit" id="submit11" class="submitz" value="Send">
+        </form>
+<!-- The Modal -->
+<div id="myModal1" class="creatmodal">
+
+  <!-- Modal content -->
+   <div id="modalcontent" class="myModal">
+<span class="close1" id="close1">&times;</span>
+            <form id="setNick" class="setNick" method="GET">
+                <p id="creatclearing">Please enter</p>
+                <p id="creatclearing1"> your nick name </p>
+                <input type="text" name="nickname" id="nickname" placeholder="your nickname" class="nickname" required><br>
+                <p id="creatanding">and</p>
+                <p id="craetclearing2">Room name</p>
+                <input type="text" name="roomname" id="roomname" placeholder="room name" class="roomname" required><br>
+                <p id="error"></p>
+                <input type="submit" id="submit" value="Ok" class="creatsubmit">
+            </form>
+            
+        </div>
+    </div>
+	<!-- The Modal -->
+	<!-- The Modal -->
+					<div id="myModal2" class="joinmodal">
+  					<div class="modalcontent">
+    				
+    				<form id="setNick2">
+					<p id="joinclearing">Please enter</p> <p id="clearing1"> your nick name </p> 
+					<input type="text" name="nickname" id="nickname2" class="nickname" placeholder="your nickname"><br>
+					<p id="joinerror1"></p>
+					<p id="joinanding">and</p>
+					<p id="joinclearing2">Room name</p>
+					<input type="text" name="roomname" id="roomname2" class="roomname" placeholder="room name" required><br>
+					 <p id="joinerror2"></p>
+					 <input type="submit" id="submit2" class="joinsubmit" value="Ok">
+					</form>			
+					<span class="close2" id="close1">&times;</span>
+  </div>
+</div>
+
+<!-- The Modal -->
+					<div id="myModal3" class="modal1">
+
+  <!-- Modal content -->
+  					<div class="modalcontent">
+    				<span class="close3" id="close">&times;</span>
+    				<form id="setNick3" >
+					<p id="shareroom">Room name</p>
+					<input type="text" name="roomname" id="roomshare" class="room"><br>
+					</form>			
+  </div>
+</div>
+
+
+  </div>
+</div>
+</section>
+
+
+
+</div>
+</body>
+</html>

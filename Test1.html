@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>JS Bin</title>
+<!--[if IE]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style>
+  article, aside, figure, footer, header, hgroup, 
+  menu, nav, section { display: block; }
+</style>
+
+
+
+
+<script type="text/javascript" src="http://fiddle.jshell.net/js/lib/mootools-core-1.4.5-nocompat.js"></script>
+<script type="text/javascript">
+
+window.addEvent('load', function() {
+var imageLoader = document.getElementById('imageLoader');
+if(imageLoader){
+    imageLoader.addEventListener('change', handleImage, false);
+	}
+var c = document.getElementById('myCanvas');
+var ctx = c.getContext('2d');
+
+
+function handleImage(e){
+    var reader = new FileReader();
+    reader.onload = function(event){
+        var img = new Image();
+        img.onload = function(){
+            c.width = img.width;
+            c.height = img.height;
+            ctx.drawImage(img,0,0);
+        }
+        img.src = event.target.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);     
+}
+
+}); 
+
+</script>
+
+<body>
+
+ <div style="background:#990; width:100%; padding:20px; ">
+<label>Image File:</label><br/> 
+<input type="file" id="imageLoader" name="imageLoader"  ;/>
+</div>
+<canvas id="myCanvas" resize="true"></canvas>
+
+</body>
+</head>
+
+</html>

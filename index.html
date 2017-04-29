@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<!-- html files and css files--tasneem -->
+<head>
+    <meta charset="utf-8" />
+    <link type="text/css" href="index.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="img/images.jpg">
+    <title>
+        DrwaingPlace
+    </title>
+	 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/index.js"></script>
+
+</head>
+
+<body>
+
+    <img id="logo" src="img/i1.png" title="DrawingPlace">
+    <center>
+        <img id="logo2" src="img/logoo.png" title="DrawingPlace">
+    </center>
+
+
+
+
+    <section class="sec2">
+        <center>
+            <fieldset class="type">
+                <center>
+                    <button id="myBtn">
+                        <p> Start New Session </p>
+					</button>
+
+
+                </center>
+                </a>
+            </fieldset><br><br>
+        </center>
+
+
+
+        <center>
+            <fieldset class="type2">
+                <center>
+                    <button id="myBtn1">
+                        <p> Join Existing Session </p>
+					 </button>
+                </center>
+            </fieldset><br><br>
+            </a>
+        </center>
+
+        <center>
+            <fieldset class="type3">
+                <center>
+                    <button id="myBtn2">
+                        <p> Login to save progress </p>
+					</button>
+                </center>
+            </fieldset><br><br>
+            </a>
+        </center>
+    </section>
+	
+	<center>
+            <fieldset class="type3">
+                <center>
+                    <button id="myBtn3">
+                        <p> signup </p>
+					</button>
+                </center>
+            </fieldset><br><br>
+            </a>
+        </center>
+    </section>
+
+    <!-- The Modal -->
+    <div id="myModal" class="creatmodal">
+        <div id="modalcontent" class="myModal">
+
+            <form id="setNick" class="setNick" method="GET">
+                <p id="creatclearing">Please enter</p>
+                <p id="creatclearing1"> your nick name </p>
+                <input type="text" name="nickname" id="nickname" placeholder="your nickname" class="nickname" required><br>
+                <p id="creatanding">and</p>
+                <p id="craetclearing2">Room name</p>
+                <input type="text" name="roomname" id="roomname" placeholder="room name" class="roomname" required><br>
+                <p id="createrror"></p>
+                <input type="submit" id="submit" value="Ok" class="creatsubmit">
+            </form>
+            <span class="close" id="creatclose">&times;</span>
+        </div>
+    </div>
+
+    <!-- Join room Modal -->
+    <div id="myModal1" class="joinmodal">
+        <div id="modalcontent" class="myModal1">
+
+            <form id="setNick2" class="setNick" method="GET">
+                <p id="joinclearing">Please enter</p>
+                <p id="joinclearing1"> your nick name </p>
+                <input type="text" name="nickname" id="nickname2" placeholder="your nickname" class="nickname" required><br>
+                <p id="joinerror1"></p>
+                <p id="joinanding">and</p>
+                <p id="joinclearing2">Room name</p>
+                <input type="text" name="roomname" id="roomname2" placeholder="room name" class="roomname" required><br>
+                <p id="joinerror2"></p>
+                <input type="submit" id="submit1" value="Ok" class="joinsubmit">
+            </form>
+            <span class="close1" id="joinclose">&times;</span>
+        </div>
+    </div>
+	
+	
+	 <div id="myModal3" class="logmodal">
+	  <div id="modalcontent" class="myModal3">
+			 <span class="close3" id="logclose">&times;</span>
+            <form id="signup" class="signup" method="GET">
+                <p id="logclearing">Please enter</p>
+                <p id="logclearing1">E-mail </p>
+                <input type="text" name="email" id="email" placeholder="your email" class="nickname" required><br>
+                
+                <p id="logclearing2">user name</p>
+                <input type="text" name="username" id="username" placeholder="user name" class="roomname1" required><br>
+				<p id="logclearing3">password</p>
+                <input type="password" name="password" id="password" placeholder="password" class="password" required><br>
+                <p id="logerror"></p>
+                <input type="submit" id="submit3" value="Ok" class="logsubmit">
+            </form>
+           
+        </div>
+    </div>
+	
+	 <div id="myModal2" class="signmodal">
+	  <div id="modalcontent" class="myModal2">
+			 <span class="close2" id="signclose">&times;</span>
+            <form id="login" class="setNick" method="GET">
+                <p id="signclearing">Please enter</p>
+                <p id="signclearing1"> your email </p>
+                <input type="text" name="email" id="email1" placeholder="your email" class="nickname" required><br>
+                <p id="signanding">and</p>
+                <p id="signclearing2">password</p>
+                <input type="password" name="password" id="password1" placeholder="password" class="roomname" required><br>
+                <p id="signerror"></p>
+                <input type="submit" id="submit2" value="Ok" class="signsubmit">
+            </form>
+        </div>
+    </div>
+	
+	
+	
+	
+<script>
+ // Get the modal
+        var modal = document.getElementById('myModal');
+        var modal1 = document.getElementById('myModal1');
+		 var modal2 = document.getElementById('myModal2');
+        var modal3 = document.getElementById('myModal3');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        var btn1 = document.getElementById("myBtn1");
+		var btn2 = document.getElementById("myBtn2");
+		var btn3 = document.getElementById("myBtn3");
+        var submit = document.getElementById("submit");
+        var submit1 = document.getElementById("submit1");
+		var submit2 = document.getElementById("submit2");
+        var submit3 = document.getElementById("submit3");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        var span1 = document.getElementsByClassName("close1")[0];
+		var span2 = document.getElementsByClassName("close2")[0];
+        var span3 = document.getElementsByClassName("close3")[0];
+
+        // When the user clicks on the button, open the modal 
+        btn.onclick = function() {   
+            modal.style.display = "block";
+        }
+        btn1.onclick = function() {   
+            modal1.style.display = "block";
+        }
+		
+		 btn2.onclick = function() {   
+            modal2.style.display = "block";
+        }
+		
+		 btn3.onclick = function() {   
+            modal3.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {   
+            modal.style.display = "none";
+        }
+        span2.onclick = function() {   
+            modal2.style.display = "none";
+        }
+		
+		 span1.onclick = function() {   
+            modal1.style.display = "none";
+        }
+        span3.onclick = function() {   
+            modal3.style.display = "none";
+        }
+
+
+		
+</script>
+    <section class="footer">
+        <center>
+            <center>
+              
+            </center>
+        </center>
+    </section>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+</body>
+
+</html>

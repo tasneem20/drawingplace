@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link type="text/css" href="index.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="img/images.jpg">
+    <title>
+        DrwaingPlace
+    </title>
+	 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/index.js"></script>
+
+</head>
+
+<body>
+
+    <img id="logo" src="img/i1.png" title="DrawingPlace">
+    <center>
+        <img id="logo2" src="img/logoo.png" title="DrawingPlace">
+    </center>
+
+
+<p id="user"></p>
+
+    <section class="sec2">
+        <center>
+            <fieldset class="type">
+                <center>
+                    <button id="myBtn">
+                        <p> Start New Session </p>
+					</button>
+
+
+                </center>
+                </a>
+            </fieldset><br><br>
+        </center>
+
+
+
+        <center>
+            <fieldset class="type2">
+                <center>
+                    <button id="myBtn1">
+                        <p> Join Existing Session </p>
+					 </button>
+                </center>
+            </fieldset><br><br>
+            </a>
+        </center>
+
+       
+	<center>
+            <fieldset class="type3">
+                <center>
+                    <button id="myBtn4">
+                        <p>My drawings </p>
+					</button>
+                </center>
+            </fieldset><br><br>
+            </a>
+        </center>
+		
+		<center>
+            <fieldset class="type3">
+                <center>
+                    <button id="myBtn3">
+                        <p>logout </p>
+					</button>
+                </center>
+            </fieldset><br><br>
+            </a>
+        </center>
+		
+    </section>
+
+   <!-- The Modal -->
+    <div id="myModal" class="creatmodal">
+        <div id="modalcontent" class="myModal">
+
+            <form id="setNick" class="setNick" method="GET">
+                <p id="creatclearing">Please enter</p>
+                <p id="creatclearing1"> your nick name </p>
+                <input type="text" name="nickname" id="nickname" placeholder="your nickname" class="nickname" required><br>
+                <p id="creatanding">and</p>
+                <p id="craetclearing2">Room name</p>
+                <input type="text" name="roomname" id="roomname" placeholder="room name" class="roomname" required><br>
+                <p id="createrror"></p>
+                <input type="submit" id="submit" value="Ok" class="creatsubmit">
+            </form>
+            <span class="close" id="creatclose">&times;</span>
+        </div>
+    </div>
+
+    <!-- Join room Modal -->
+    <div id="myModal1" class="joinmodal">
+        <div id="modalcontent" class="myModal1">
+
+            <form id="setNick2" class="setNick" method="GET">
+                <p id="joinclearing">Please enter</p>
+                <p id="joinclearing1"> your nick name </p>
+                <input type="text" name="nickname" id="nickname2" placeholder="your nickname" class="nickname" required><br>
+                <p id="joinerror1"></p>
+                <p id="joinanding">and</p>
+                <p id="joinclearing2">Room name</p>
+                <input type="text" name="roomname" id="roomname2" placeholder="room name" class="roomname" required><br>
+                <p id="joinerror2"></p>
+                <input type="submit" id="submit1" value="Ok" class="joinsubmit">
+            </form>
+            <span class="close1" id="joinclose">&times;</span>
+        </div>
+    </div>
+	
+	
+	
+	
+<script>
+ // Get the modal
+ function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+} 
+        var modal = document.getElementById('myModal');
+        var modal1 = document.getElementById('myModal1');
+		 var modal2 = document.getElementById('myModal2');
+        var modal3 = document.getElementById('myModal3');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        var btn1 = document.getElementById("myBtn1");
+		var btn2 = document.getElementById("myBtn2");
+		var btn3 = document.getElementById("myBtn3");
+        var submit = document.getElementById("submit");
+        var submit1 = document.getElementById("submit1");
+		
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        var span1 = document.getElementsByClassName("close1")[0];
+		
+        // When the user clicks on the button, open the modal 
+        btn.onclick = function() {   
+            modal.style.display = "block";
+        }
+        btn1.onclick = function() {   
+            modal1.style.display = "block";
+        }
+		btn3.onclick=function(){
+		writeCookie('username',"",-1);
+		writeCookie('email',"",-1);
+		 window.location.assign("http://localhost:3000/");
+		
+		}
+		
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {   
+            modal.style.display = "none";
+        }
+		 span1.onclick = function() {   
+            modal1.style.display = "none";
+        }
+       
+        submit.onclick = function() {   
+            //modal.style.display = "none";
+        }
+        submit1.onclick = function() {   
+     //modal2.style.display = "none";
+        }
+		var user = document.getElementById("user");
+user.innerHTML =(getCookie('username'));
+
+
+		
+		jQuery(function($) {
+            var socket = io.connect();
+            var $nickForm = $('#setNick');
+            var $nickBox = $('#nickname');
+            var $roomBox = $('#roomname');
+
+            var $nickForm2 = $('#setNick2');
+            var $nickBox2 = $('#nickname2');
+            var $roomBox2 = $('#roomname2');
+            var $nickError = $('#error');
+            var $usernamee = $('#Name');
+            var $nickError2 = $('#error2');
+
+            var callback;
+		
+			var $Index = 1;
+            function writeCookie(name, value, days) {
+                var date, expires;
+                if (days) {
+                    date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toGMTString();
+                } else {
+                    expires = "";
+                }
+                document.cookie = name + "=" + value + expires + "; path=/";
+            }
+			
+            
+			$nickForm.submit(function(e) {
+                e.preventDefault();
+                socket.emit('Create room', $roomBox.val(), function(callback) {
+                    if (callback) {
+                       
+                        socket.emit('new user', {
+                            name: $nickBox.val(),
+                            room: $roomBox.val(),
+							 index: $Index
+                        });
+						writeCookie('username',$nickBox.val(),10);
+                        writeCookie('SocketID', socket.id, 10);
+                        window.location.assign("http://localhost:3000/public/" + $roomBox.val() + ".html");
+                    } else {
+                        $nickError.html('that room is already in use! click on join room');
+                    }
+                });
+            });
+			
+			
+            $nickForm2.submit(function(e) {
+                e.preventDefault();
+                socket.emit('Join room', {
+                    name: $nickBox2.val(),
+                    room: $roomBox2.val()
+                }, function(callback, msg) {
+                    if (callback) {
+                        socket.emit('new user', {
+                            name: $nickBox2.val(),
+                            room: $roomBox2.val(),
+							 index: $Index
+                        });
+                        writeCookie('SocketID', socket.id, 10);
+						writeCookie('username',$nickBox2.val(),10);
+                        window.location.assign("http://localhost:3000/public/" + $roomBox2.val() + ".html");
+                    } else {
+                        $nickError2.html('that room is not exist');
+                    }
+                });
+            });
+
+      
+		
+		});
+		
+</script>
+    <section class="footer">
+        <center>
+            <center>
+              
+            </center>
+        </center>
+    </section>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+</body>
+
+</html>
